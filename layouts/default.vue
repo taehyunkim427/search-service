@@ -32,10 +32,18 @@
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-spacer />
+      <v-col align-self="start">
+        <v-autocomplete
+            clearable
+            min-width="300"
+            label="Search"
+            placeholder="Discover new blog!"
+            justify="bottom"
+            prepend-icon="mdi-magnify"
+            >
+        </v-autocomplete>
+      </v-col>
       <v-spacer />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
@@ -56,8 +64,8 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <v-footer :absolute="fixed" app>
+      <span>&copy; 2023 Nuxt</span>
     </v-footer>
   </v-app>
 </template>
@@ -77,15 +85,20 @@ export default {
           to: '/',
         },
         {
+          icon: 'mdi-apps',
+          title: 'Card',
+          to: '/card',
+        },
+        {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          title: 'List',
+          to: '/list',
         },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'Search',
     }
   },
 }
