@@ -33,20 +33,21 @@
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-spacer />
-      <v-col align-self="start">
+      <SearchField />
+      <!-- <v-col align-self="start">
         <v-autocomplete
             clearable
             min-width="300"
-            label="Search"
+            label="Search"\
             placeholder="Discover new blog!"
             justify="bottom"
             prepend-icon="mdi-magnify"
             >
         </v-autocomplete>
-      </v-col>
+      </v-col> -->
       <v-spacer />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
+        <v-icon>mdi-star</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
@@ -58,9 +59,9 @@
       <v-list>
         <v-list-item @click.native="right = !right">
           <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
+            <v-icon> mdi-repeat </v-icon>
           </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
+          <v-list-item-title>Switch drawer</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -73,33 +74,31 @@
 <script>
 export default {
   name: 'DefaultLayout',
-  data() {
-    return {
+  data: () => ({
+      query: "hi",
       clipped: false,
       drawer: false,
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-chart-bubble',
           title: 'Welcome',
           to: '/',
+        },
+        {
+          icon: 'mdi-view-headline',
+          title: 'List',
+          to: '/list',
         },
         {
           icon: 'mdi-apps',
           title: 'Card',
           to: '/card',
         },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'List',
-          to: '/list',
-        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Search',
-    }
-  },
+  }),
 }
 </script>
