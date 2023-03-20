@@ -35,7 +35,22 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [ '@nuxtjs/axios' ],
+
+  server: { 
+    port: 8922
+  },
+
+  axios: {
+    baseURL: 'http://localhost:4261', // Spring Boot 서버의 주소
+    headers: {
+      common: {
+        'Access-Control-Allow-Origin': 'http://localhost:8080', // 필요한 헤더 설정
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

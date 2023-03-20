@@ -14,7 +14,6 @@
                 </v-col>
             </v-row>
         </v-container>
-
     </div>
 </template>
 <script>
@@ -25,10 +24,8 @@ export default {
             default: 1
         }
     },
-    data () {
-        return {
-            page: 1,
-        }
-    },
+    data: () => ({
+        page: 1
+    }),
 }
 </script>
