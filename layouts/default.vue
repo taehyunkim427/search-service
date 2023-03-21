@@ -1,5 +1,6 @@
 <template>
   <v-app dark>
+
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -24,26 +25,42 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
+
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
       </v-btn>
+
       <v-spacer />
+
+      <SearchSort />
       <SearchField />
+      <SearchSize />
+
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      
+
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer" class="mr-2">
+        HYPE
         <v-icon>mdi-star</v-icon>
       </v-btn>
     </v-app-bar>
+
+
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
+
+
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
         <v-list-item @click.native="right = !right">
@@ -54,9 +71,13 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+
     <v-footer :absolute="fixed" app>
       <span>&copy; 2023 Taehyun</span>
     </v-footer>
+
+
   </v-app>
 </template>
 
