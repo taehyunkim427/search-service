@@ -26,8 +26,9 @@
                         <v-list-subheader><span class="font-weight-light">{{ item.datetime }}</span></v-list-subheader>
                     </v-col> -->
                 </v-row>
+
                 <v-row>
-                    <v-divider></v-divider>
+                    <v-divider v-if="i !== blogs.length - 1"></v-divider>
                 </v-row>
 
             </v-container>
