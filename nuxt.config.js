@@ -35,7 +35,9 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [ '@nuxtjs/axios' ],
+  modules: [ 
+    '@nuxtjs/axios',
+  ],
 
   server: { 
     port: process.env.NODE_ENV === 'production' ? null : 8922,

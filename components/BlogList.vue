@@ -39,20 +39,16 @@
 <script>
 import DOMPurify from 'dompurify';
 import { map, mapValues } from 'lodash';
-import { FETCH_BLOG_LISTS } from '@/store'
 
 export default {
-    async fetch() {
-        await this.$store.dispatch(FETCH_BLOG_LISTS);
-    },
     computed: {
         blogMeta () {
-            return map(this.$store.state.blogMeta, (obj) => {
-                return mapValues(obj, DOMPurify.sanitize)
-            });
+            return this.$store.state.blogMeta;
         },
         blogs () {
-            return this.$store.state.blogs;
+            return map(this.$store.state.blogs, (obj) => {
+                return mapValues(obj, DOMPurify.sanitize)
+            });
         },
     },
 }

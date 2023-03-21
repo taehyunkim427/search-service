@@ -55,7 +55,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :absolute="fixed" app>
-      <span>&copy; 2023 Nuxt</span>
+      <span>&copy; 2023 Taehyun</span>
     </v-footer>
   </v-app>
 </template>

@@ -37,9 +37,9 @@ export const state = () => ({
   export const actions = {
     async [FETCH_BLOG_LISTS]({ state, commit }) {
       const searchParams = { query: state.searchQuery, size : state.searchSize, sort: state.searchSort, page: state.searchPage }
-      const res = await this.$axios.post('/blog/api/list', searchParams);
-      commit('SET_BLOG_META', res.data.meta);
-      commit('SET_BLOGS', res.data.documents);
+      const { data } = await this.$axios.post('/blog/api/list', searchParams);
+      commit('SET_BLOG_META', data.meta);
+      commit('SET_BLOGS', data.documents);
     },
   }
    
