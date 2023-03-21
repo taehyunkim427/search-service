@@ -9,7 +9,7 @@
         Welcome
       </h1>
       <h3 class="subheading">
-        Find new blog today!
+        Explore a new blog today!
       </h3>
     </div>
   </v-parallax>

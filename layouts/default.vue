@@ -34,17 +34,6 @@
       </v-btn>
       <v-spacer />
       <SearchField />
-      <!-- <v-col align-self="start">
-        <v-autocomplete
-            clearable
-            min-width="300"
-            label="Search"\
-            placeholder="Discover new blog!"
-            justify="bottom"
-            prepend-icon="mdi-magnify"
-            >
-        </v-autocomplete>
-      </v-col> -->
       <v-spacer />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-star</v-icon>
@@ -75,7 +64,6 @@
 export default {
   name: 'DefaultLayout',
   data: () => ({
-      query: "hi",
       clipped: false,
       drawer: false,
       fixed: false,
@@ -90,11 +78,11 @@ export default {
           title: 'List',
           to: '/list',
         },
-        {
-          icon: 'mdi-apps',
-          title: 'Card',
-          to: '/card',
-        },
+        // {
+        //   icon: 'mdi-apps',
+        //   title: 'Card',
+        //   to: '/card',
+        // },
       ],
       miniVariant: false,
       right: true,

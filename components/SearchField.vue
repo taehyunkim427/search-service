@@ -2,50 +2,51 @@
     <v-col align-self="start">
         <v-autocomplete
             ref="inputField"
-            v-model="param.searchQuery"
+            v-model="searchQuery"
             clearable
             min-width="300"
             label="Search"
-            placeholder="Discover new blog!"
+            placeholder="Find new blog!"
             justify="bottom"
             prepend-icon="mdi-magnify"
-            :items="param.items"
-            @keyup.enter="sendDataToPage">
+            :items="items"
+            @keyup.enter="throttledSearch">
         </v-autocomplete>
       </v-col>
 </template>
 <script>
+import { throttle } from 'lodash';
+import { FETCH_BLOG_LISTS } from '@/store'
+
 export default {
+    
     data: () => ({
-        param: {
-            searchQuery : "다나카 콘서트",
-            items: [
-                '다나카',
-                '김건욱',
-                '김태현',
-                '안리',
-            ]
-        }
+        items: [
+            '다나카',
+            '김건욱',
+            '김태현',
+            '안리',
+        ]
     }),
+    computed: {
+        searchQuery () {
+            return this.$store.state.searchQuery;
+        },
+    },
     methods : {
-        sendDataToPage(e) {
-            const param = {
-                query: e.target.value,
-                sort: "accuracy",
-                size: 10,
-                page: 10,
-            };
+        searchBlogs(e) {
             
-            // const currentPath = this.$route.path === '/' || this.$route.path === '/empty' ? '/list' : this.$route.path;
+            this.$store.commit('SET_SEARCH_QUERY', e.target.value);
             
-            // // 브라우저 히스토리 스택에 추가하지 않음.
-            // this.$router.replace({ path: '/empty' }, () => {
-            //     // 결과 페이지로 이동하도록 설정. 
-            //     this.$router.push({ path: currentPath, query: param});
-            // });
-            this.$router.push({ path: '/list', query: param});
+            this.$store.dispatch(FETCH_BLOG_LISTS);
+            
+            // 결과 페이지로 이동하도록 설정. 
+            this.$route.path === '/' && this.$router.push({ path: '/list' });
 
         },
+        throttledSearch: throttle(function (e) {
+            e.target.value.trim() && this.searchBlogs(e);
+        }, 500)
     }
 }
 </script>

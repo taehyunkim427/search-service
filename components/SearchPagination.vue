@@ -7,7 +7,7 @@
                     <v-pagination
                     v-model="page"
                     class="my-4"
-                    :length="pageable_count"
+                    :length="100"
                     :total-visible="12"
                     ></v-pagination>
                 </v-container>
@@ -18,12 +18,6 @@
 </template>
 <script>
 export default {
-    props: {
-        pageable_count: {
-            type: Number,
-            default: 1
-        }
-    },
     data: () => ({
         page: 1
     }),

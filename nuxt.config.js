@@ -38,14 +38,17 @@ export default {
   modules: [ '@nuxtjs/axios' ],
 
   server: { 
-    port: 8922
+    port: process.env.NODE_ENV === 'production' ? null : 8922,
   },
 
   axios: {
-    baseURL: 'http://localhost:4261', // Spring Boot 서버의 주소
+    baseURL: 
+      process.env.NODE_ENV === 'production'
+      ? 'https://my-json-server.com' // Spring Api 운영
+      : 'http://localhost:4261', // Spring Api 로컬
     headers: {
       common: {
-        'Access-Control-Allow-Origin': 'http://localhost:8080', // 필요한 헤더 설정
+        'Access-Control-Allow-Origin': 'http://localhost:4261',
         'Accept': '*/*',
         'Content-Type': 'application/json'
       },
