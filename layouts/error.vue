@@ -1,16 +1,25 @@
 <template>
   <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
+    <h1 v-if="error && error.statusCode === 404">
+      {{ pageNotFound }} (Status Code: {{ error.statusCode }})
+    </h1>
+    <h1 v-else-if="error.statusCode === 400">
+      요청 실패 !! 검색어를 입력해주세요!! (Status Code: {{ error.statusCode }})
+    </h1>
+    <h1 v-else-if="error.statusCode === 500">
+      서버 내부 오류 발생!! 검색어를 입력해주세요!! (Status Code: {{ error.statusCode }})
     </h1>
     <h1 v-else>
-      {{ otherError }}
+      {{ otherError }} (Status Code: {{ error.statusCode }})
     </h1>
-    <NuxtLink to="/"> Home page </NuxtLink>
+    <NuxtLink to="/"> 홈페이지 </NuxtLink>
   </v-app>
 </template>
 
+
 <script>
+import { FETCH_HYPE_QUERY } from '@/store'
+
 export default {
   name: 'EmptyLayout',
   layout: 'empty',
@@ -22,8 +31,8 @@ export default {
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred',
+      pageNotFound: '페이지를 찾을 수 없습니다!!',
+      otherError: '오류가 발생했습니다!!',
     }
   },
   head() {
@@ -32,6 +41,9 @@ export default {
     return {
       title,
     }
+  },
+  created() {
+    return this.$store.dispatch(FETCH_HYPE_QUERY);
   },
 }
 </script>

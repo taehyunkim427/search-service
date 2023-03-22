@@ -22,12 +22,7 @@ import { FETCH_BLOG_LISTS, SET_SEARCH_SIZE } from '@/store'
 
 export default {
     data: () => ({
-      tags: [
-        5,
-        10,
-        25,
-        50,
-      ],
+      tags: [5,10,25,50]
     }),
     computed: {
         searchSize () {

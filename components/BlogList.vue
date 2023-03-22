@@ -39,17 +39,19 @@
 
 <script>
 import DOMPurify from 'dompurify';
-import { map, mapValues } from 'lodash';
 
 export default {
     computed: {
-        blogMeta () {
+        blogMeta() {
             return this.$store.state.blogMeta;
         },
-        blogs () {
-            return map(this.$store.state.blogs, (obj) => {
-                return mapValues(obj, DOMPurify.sanitize)
-            });
+        blogs() {
+            return this.$store.state.blogs.map(
+                obj => Object.fromEntries(
+                    Object.entries(obj).map(
+                        ([key, value]) => [key, DOMPurify.sanitize(value)])
+                )
+            );
         },
     },
 }

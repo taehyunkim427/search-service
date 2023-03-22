@@ -10,13 +10,13 @@
             justify="bottom"
             prepend-icon="mdi-magnify"
             :items="tags"
-            @keyup.enter="throttledSearch">
+            @keyup.enter="onKeyEnterSearch"
+            @input="onItemSelected">
         </v-autocomplete>
       </v-col>
 </template>
 <script>
-import { throttle } from 'lodash';
-import { FETCH_BLOG_LISTS, SET_SEARCH_QUERY, SET_SEARCH_PAGE, FETCH_HYPE_QUERY } from '@/store'
+import { FETCH_BLOG_LISTS, SET_SEARCH_QUERY, SET_SEARCH_PAGE } from '@/store'
 
 export default {
     data() {
@@ -25,20 +25,24 @@ export default {
         };
     },
     methods : {
-        searchBlogs(e) {
-            
-            this.$store.commit(SET_SEARCH_QUERY, e.target.value);
+        searchBlogs() {
             this.$store.commit(SET_SEARCH_PAGE, 1);
             this.$store.dispatch(FETCH_BLOG_LISTS);
-            this.$store.dispatch(FETCH_HYPE_QUERY);
+            // this.$store.dispatch(FETCH_HYPE_QUERY);
             
             // 결과 페이지로 이동하도록 설정. 
             this.$route.path === '/' && this.$router.push({ path: '/list' });
 
         },
-        throttledSearch: throttle(function (e) {
+        onKeyEnterSearch(e) {
+            e.preventDefault();
             e.target.value.trim() && this.searchBlogs(e);
-        }, 500)
+            this.$store.commit(SET_SEARCH_QUERY, e.target.value);
+        },
+        onItemSelected(selectedItem) {
+            selectedItem && this.$store.commit(SET_SEARCH_QUERY, selectedItem);
+            this.searchBlogs();
+        }
     },
     computed: {
         tags () {
