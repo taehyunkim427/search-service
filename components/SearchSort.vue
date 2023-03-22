@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { FETCH_BLOG_LISTS } from '@/store'
+import { FETCH_BLOG_LISTS, SET_SEARCH_SORT } from '@/store'
 
 export default {
     data: () => ({
@@ -34,7 +34,7 @@ export default {
     },
     methods : {
         async searchPages(e) {
-            this.$store.commit('SET_SEARCH_SORT', e);
+            this.$store.commit(SET_SEARCH_SORT, e);
             await this.$store.dispatch(FETCH_BLOG_LISTS);
         },
     },

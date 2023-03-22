@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-import { FETCH_BLOG_LISTS } from '@/store'
+import { FETCH_BLOG_LISTS, SET_SEARCH_PAGE } from '@/store'
 
 export default {
     computed: {
@@ -31,7 +31,7 @@ export default {
     },
     methods : {
         async searchPages(e) {
-            this.$store.commit('SET_SEARCH_PAGE', e);
+            this.$store.commit(SET_SEARCH_PAGE, e);
             await this.$store.dispatch(FETCH_BLOG_LISTS);
         },
     },

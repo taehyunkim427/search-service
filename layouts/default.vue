@@ -70,6 +70,7 @@
           <v-list-item-title>Switch drawer</v-list-item-title>
         </v-list-item>
       </v-list>
+      <HypeQuery/>
     </v-navigation-drawer>
 
 
@@ -82,6 +83,8 @@
 </template>
 
 <script>
+import { FETCH_HYPE_QUERY } from '@/store'
+
 export default {
   name: 'DefaultLayout',
   data: () => ({
@@ -99,15 +102,13 @@ export default {
           title: 'List',
           to: '/list',
         },
-        // {
-        //   icon: 'mdi-apps',
-        //   title: 'Card',
-        //   to: '/card',
-        // },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
   }),
+  created() {
+    return this.$store.dispatch(FETCH_HYPE_QUERY);
+  },
 }
 </script>

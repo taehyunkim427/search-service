@@ -9,6 +9,7 @@
 <script>
 import BlogList from '../components/BlogList.vue';
 import SearchPagination from '~/components/SearchPagination.vue';
+import { SET_BLOG_META, SET_BLOGS } from '@/store'
 
 export default {
     created() {
@@ -28,8 +29,8 @@ export default {
             }
             console.log(searchParams)
             const res = await this.$axios.post('/blog/api/list', searchParams);
-            this.$store.commit('SET_BLOG_META', res.data.meta);
-            this.$store.commit('SET_BLOGS', res.data.documents);
+            this.$store.commit(SET_BLOG_META, res.data.meta);
+            this.$store.commit(SET_BLOGS, res.data.documents);
         },
     },
 }
