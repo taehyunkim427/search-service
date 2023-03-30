@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "your-app-name",
+    "name": "search-service-front",
     "builds": [
       {
         "src": "nuxt.config.js",
