@@ -28,7 +28,7 @@
 
 
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer;onHypeButtonClick" />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
@@ -47,7 +47,7 @@
       <v-spacer />
       
 
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer" class="mr-2">
+      <v-btn icon @click.stop="() => { onHypeButtonClick(); rightDrawer = !rightDrawer; }" class="mr-2">
         HYPE
         <v-icon>mdi-star</v-icon>
       </v-btn>

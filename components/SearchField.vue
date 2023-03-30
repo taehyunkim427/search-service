@@ -2,7 +2,7 @@
     <v-col align-self="start">
         <v-autocomplete
             ref="inputField"
-            v-model="searchQuery"
+            :value="searchQuery"
             clearable
             min-width="300"
             label="Search"
@@ -10,7 +10,7 @@
             justify="bottom"
             prepend-icon="mdi-magnify"
             :items="tags"
-            @keyup.enter="onKeyEnterSearch"
+            @keyup.enter.stop="onKeyEnterSearch"
             @input="onItemSelected">
         </v-autocomplete>
       </v-col>
@@ -19,34 +19,30 @@
 import { FETCH_BLOG_LISTS, SET_SEARCH_QUERY, SET_SEARCH_PAGE } from '@/store'
 
 export default {
-    data() {
-        return {
-            searchQuery: "",
-        };
+    computed: {
+        tags () {
+            return this.$store.state.hypeQuery.map((item) => item.query);
+        },
+        searchQuery () {
+            return this.$store.state.searchQuery;
+        }
     },
     methods : {
-        searchBlogs() {
+        searchBlogs(query) {
+            this.$store.commit(SET_SEARCH_QUERY, query)
             this.$store.commit(SET_SEARCH_PAGE, 1);
             this.$store.dispatch(FETCH_BLOG_LISTS);
-            // this.$store.dispatch(FETCH_HYPE_QUERY);
             
             // 결과 페이지로 이동하도록 설정. 
             this.$route.path === '/' && this.$router.push({ path: '/list' });
 
         },
         onKeyEnterSearch(e) {
-            e.preventDefault();
-            e.target.value.trim() && this.searchBlogs(e);
-            this.$store.commit(SET_SEARCH_QUERY, e.target.value);
+            e.target.value.trim().length !== 0 && this.searchBlogs(e.target.value);
         },
         onItemSelected(selectedItem) {
-            selectedItem && this.$store.commit(SET_SEARCH_QUERY, selectedItem);
-            this.searchBlogs();
-        }
-    },
-    computed: {
-        tags () {
-            return this.$store.state.hypeQuery.map((item) => item.query);;
+            selectedItem = selectedItem || "";
+            selectedItem.trim().length !== 0 && this.searchBlogs(selectedItem);
         }
     }
 }
