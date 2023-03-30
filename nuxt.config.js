@@ -38,9 +38,16 @@ export default {
   modules: [ 
     '@nuxtjs/axios',
   ],
-  
+
+  server: { 
+    port: process.env.NODE_ENV === 'production' ? null : 8922,
+  },
+
   axios: {
-    baseURL: 'http://localhost:4261', // Spring Api 로컬
+    baseURL: 
+      process.env.NODE_ENV === 'production'
+      ? 'https://my-json-server.com' // Spring Api 운영
+      : 'http://localhost:4261', // Spring Api 로컬
     headers: {
       common: {
         'Access-Control-Allow-Origin': 'http://localhost:4261',
