@@ -1,6 +1,10 @@
 {
     "version": 2,
     "name": "search-service-front",
+    "buildCommand":"npm run build",
+    "installCommand":"npm install",
+    "outputDirectory":".nuxt/dist",
+    "regions":["icn1"],
     "builds": [
       {
         "src": "nuxt.config.js",
