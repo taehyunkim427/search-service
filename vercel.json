@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "name": "your-app-name",
+    "builds": [
+      {
+        "src": "nuxt.config.js",
+        "use": "@nuxtjs/vercel-builder",
+        "config": {
+          "serverFiles": ["package.json"]
+        }
+      }
+    ]
+  }
