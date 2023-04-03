@@ -1,22 +1,23 @@
-name: search service CI/CD Docker
+name: CI/CD Docker
 
 # 트리거를 수행할 브랜치를 지정합니다.
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 # 환경설정
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.actor }}/search-service-front
   VERSION: ${{ github.sha }}
-  NAME: search_service_front_cicd
+  NAME: go_cicd
 
 jobs:
   # 빌드 Job
   build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       # github repository에서 checkout
       - uses: actions/checkout@v2
