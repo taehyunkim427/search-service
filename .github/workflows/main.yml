@@ -10,7 +10,7 @@ on:
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.actor }}/search-service-front
   VERSION: ${{ github.sha }}
-  NAME: search_service_cicd
+  NAME: search_service_front_cicd
 
 jobs:
   # 빌드 Job
