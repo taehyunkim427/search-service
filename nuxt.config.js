@@ -46,11 +46,10 @@ export default {
   axios: {
     baseURL: 
       process.env.NODE_ENV === 'production'
-      ? 'http://localhost:8080' // Spring Api 운영
+      ? 'http://52.62.60.164:8080' // Spring Api 운영
       : 'http://localhost:8080', // Spring Api 로컬
     headers: {
       common: {
-        'Access-Control-Allow-Origin': 'http://localhost:8080',
         'Accept': '*/*',
         'Content-Type': 'application/json'
       },
