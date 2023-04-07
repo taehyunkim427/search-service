@@ -24,15 +24,14 @@
 </template>
 
 <script>
-import DOMPurify from 'dompurify';
 import { FETCH_BLOG_LISTS, SET_SEARCH_QUERY, SET_SEARCH_PAGE } from '@/store'
 
 export default {
     computed: {
         hypeQuery() {
-            return this.$store.state.hypeQuery.map(
+            return this.$store.state.hypeQuery?.map(
                 obj => Object.fromEntries(
-                    Object.entries(obj).map(([key, value]) => [key, DOMPurify.sanitize(value)])
+                    Object.entries(obj).map(([key, value]) => [key, value])
                 )
             );
         },

@@ -47,7 +47,7 @@
       <v-spacer />
       
 
-      <v-btn icon @click.stop="() => { onHypeButtonClick(); rightDrawer = !rightDrawer; }" class="mr-2">
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer" class="mr-2">
         HYPE
         <v-icon>mdi-star</v-icon>
       </v-btn>
@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { FETCH_HYPE_QUERY } from '@/store'
+
 export default {
   name: 'DefaultLayout',
   data: () => ({
@@ -105,5 +107,8 @@ export default {
       right: true,
       rightDrawer: false,
   }),
+  created() {
+    return this.$store.dispatch(FETCH_HYPE_QUERY);
+  }
 }
 </script>
