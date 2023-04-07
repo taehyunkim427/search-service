@@ -33,7 +33,7 @@ export default {
             this.$store.commit(SET_SEARCH_PAGE, 1);
             this.$store.dispatch(FETCH_BLOG_LISTS);
             
-            // 결과 페이지로 이동하도록 설정. 
+            // 결과 페이지로 이동하도록 설정
             this.$route.path === '/' && this.$router.push({ path: '/list' });
 
         },

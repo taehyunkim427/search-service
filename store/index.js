@@ -48,11 +48,14 @@ export const state = () => ({
   }
   
   export const actions = {
-    async [FETCH_BLOG_LISTS]({ state, commit }) {
+    async [FETCH_BLOG_LISTS]({ state, commit, dispatch }) {
       const searchParams = { query: state.searchQuery, size : state.searchSize, sort: state.searchSort, page: state.searchPage }
       const { data } = await this.$axios.post('/blog/api/list', searchParams);
       commit('SET_BLOG_META', data.meta);
       commit('SET_BLOGS', data.documents);
+
+      // FETCH_BLOG_LISTS가 완료된 후 FETCH_HYPE_QUERY 실행
+      dispatch(FETCH_HYPE_QUERY);
     },
     async [FETCH_HYPE_QUERY]({ commit }) {
       const { data } = await this.$axios.get('/blog/cache/top');

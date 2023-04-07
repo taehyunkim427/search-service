@@ -18,8 +18,6 @@
 
 
 <script>
-import { FETCH_HYPE_QUERY } from '@/store'
-
 export default {
   name: 'EmptyLayout',
   layout: 'empty',
@@ -41,9 +39,6 @@ export default {
     return {
       title,
     }
-  },
-  created() {
-    return this.$store.dispatch(FETCH_HYPE_QUERY);
   },
 }
 </script>
