@@ -83,8 +83,6 @@
 </template>
 
 <script>
-import { FETCH_HYPE_QUERY } from '@/store'
-
 export default {
   name: 'DefaultLayout',
   data: () => ({
@@ -107,13 +105,5 @@ export default {
       right: true,
       rightDrawer: false,
   }),
-  created() {
-    return this.$store.dispatch(FETCH_HYPE_QUERY);
-  },
-  methods: {
-    onHypeButtonClick() {
-      return this.$store.dispatch(FETCH_HYPE_QUERY);
-    },
-  },
 }
 </script>
