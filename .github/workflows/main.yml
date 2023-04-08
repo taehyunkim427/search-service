@@ -92,4 +92,3 @@ jobs:
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
             --name ${{ env.CONTANIER_NAME2 }} \
             --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
-          docker image prune -af
