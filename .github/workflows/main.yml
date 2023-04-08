@@ -64,8 +64,7 @@ jobs:
       # docker-compose file down
       - name: Download docker-compose file
         run: |
-          curl -O https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ github.repository }}/${{ github.ref_name }}/docker-compose.yml
-
+          curl -O https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ github.repository }}/main/docker-compose.yml
       # 필요할 경우 기존 nginx-proxy 및 letsencrypt 컨테이너 중지 및 제거
       - name: Stop and remove existing nginx-proxy and letsencrypt containers
         run: |
