@@ -11,7 +11,7 @@ env:
   VERSION: ${{ github.sha }}
   CONTANIER_NAME1: search_service_front1
   CONTANIER_NAME2: search_service_front2
-  DOMAIN_NAME: 52.62.60.164
+  DOMAIN_NAME: searchservice.shop
   NAME: search_service_front_cicd
 
 jobs:
@@ -61,20 +61,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # 필요할 경우 기존 nginx-proxy 컨테이너 중지 및 제거
-      - name: Stop and remove existing nginx-proxy container
+      # 필요할 경우 기존 nginx-proxy 및 letsencrypt 컨테이너 중지 및 제거
+      - name: Stop and remove existing nginx-proxy and letsencrypt containers
         run: |
-          docker stop nginx-proxy || true
-          docker rm nginx-proxy || true
-      # nginx-proxy 컨테이너 실행
-      - name: Run nginx-proxy container
+          docker-compose down
+      # nginx-proxy 및 letsencrypt 컨테이너 실행
+      - name: Run nginx-proxy and letsencrypt containers
         run: |
-          docker pull jwilder/nginx-proxy
-          docker run -d --name nginx-proxy --restart always -p 80:80 -p 443:443 \
-            -v /home/ec2-user:/etc/nginx/vhost.d:ro \
-            -v /var/run/docker.sock:/tmp/docker.sock:ro \
-            --name nginx-proxy --restart always \
-            jwilder/nginx-proxy
+          docker-compose up -d
       # front 컨테이너 실행
       - name: Docker run
         run: |
@@ -82,6 +76,8 @@ jobs:
             && docker rm -fv ${{ env.CONTANIER_NAME1 }}
           docker run -d \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME1 }} \
             --name ${{ env.CONTANIER_NAME1 }} \
             --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
@@ -89,6 +85,8 @@ jobs:
             && docker rm -fv ${{ env.CONTANIER_NAME2 }}
           docker run -d \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
             --name ${{ env.CONTANIER_NAME2 }} \
             --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
