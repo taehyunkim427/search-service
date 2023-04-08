@@ -58,7 +58,21 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # 3000 -> 80 포트로 수행하도록 지정
+      # 필요할 경우 기존 nginx-proxy 컨테이너 중지 및 제거
+      - name: Stop and remove existing nginx-proxy container
+        run: |
+          docker stop nginx-proxy || true
+          docker rm nginx-proxy || true
+      # nginx-proxy 컨테이너 실행
+      - name: Run nginx-proxy container
+        run: |
+          docker pull jwilder/nginx-proxy:alpine
+          docker run -d -p 80:80 -p 443:443 \
+            -v /home/ec2-user/vhost.d:/etc/nginx/vhost.d:ro \
+            -v /var/run/docker.sock:/tmp/docker.sock:ro \
+            --name nginx-proxy --restart always \
+            jwilder/nginx-proxy:alpine
+      # front 컨테이너 실행
       - name: Docker run
         run: |
           docker stop ${{ env.NAME }} && docker rm ${{ env.NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
