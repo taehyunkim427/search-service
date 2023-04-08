@@ -70,7 +70,7 @@ jobs:
       - name: Run nginx-proxy container
         run: |
           docker pull jwilder/nginx-proxy
-          docker run -d --name redis --restart always -p 80:80 -p 443:443 \
+          docker run -d --name nginx-proxy --restart always -p 80:80 -p 443:443 \
             -v /home/ec2-user/vhost.d:/etc/nginx/vhost.d:ro \
             -v /var/run/docker.sock:/tmp/docker.sock:ro \
             --name nginx-proxy --restart always \
