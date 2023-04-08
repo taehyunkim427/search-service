@@ -9,6 +9,9 @@ on:
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.actor }}/search_service_front
   VERSION: ${{ github.sha }}
+  CONTANIER_NAME1: nuxt-round-robin-deploy1
+  CONTANIER_NAME2: nuxt-round-robin-deploy2
+  DOMAIN_NAME: domain or ip
   NAME: search_service_front_cicd
 
 jobs:
@@ -66,12 +69,12 @@ jobs:
       # nginx-proxy 컨테이너 실행
       - name: Run nginx-proxy container
         run: |
-          docker pull jwilder/nginx-proxy:alpine
-          docker run -d -p 80:80 -p 443:443 \
+          docker pull jwilder/nginx-proxy
+          docker run -d --name redis --restart always -p 80:80 -p 443:443 \
             -v /home/ec2-user/vhost.d:/etc/nginx/vhost.d:ro \
             -v /var/run/docker.sock:/tmp/docker.sock:ro \
             --name nginx-proxy --restart always \
-            jwilder/nginx-proxy:alpine
+            jwilder/nginx-proxy
       # front 컨테이너 실행
       - name: Docker run
         run: |
