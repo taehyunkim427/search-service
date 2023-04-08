@@ -72,6 +72,7 @@ jobs:
       # nginx-proxy 및 letsencrypt 컨테이너 실행
       - name: Run nginx-proxy and letsencrypt containers
         run: |
+          docker network inspect nginx-proxy >/dev/null 2>&1 || docker network create nginx-proxy
           docker-compose up -d
       # front 컨테이너 실행
       - name: Docker run
