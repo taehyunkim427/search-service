@@ -61,31 +61,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # nginx-proxy and letsencrypt-nginx-proxy-companion 체크 후 실행
-      - name: Check and restart docker-compose
-        run: |
-          if ! docker ps | grep -q 'nginx-proxy' || ! docker ps | grep -q 'letsencrypt-nginx'; then
-            docker-compose down
-            docker-compose up -d
-          fi
       # front 컨테이너 실행
       - name: Docker run
         run: |
-          docker ps -q --filter "name=${{ env.CONTANIER_NAME1 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME1 }} \
-            && docker rm -fv ${{ env.CONTANIER_NAME1 }}
-          docker run -d \
-            -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
-            -e CONTANIER_NAME=${{ env.CONTANIER_NAME1 }} \
-            --name ${{ env.CONTANIER_NAME1 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:latest
-          docker ps -q --filter "name=${{ env.CONTANIER_NAME2 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME2 }} \
-            && docker rm -fv ${{ env.CONTANIER_NAME2 }}
-          docker run -d \
-            -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
-            -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
-            --name ${{ env.CONTANIER_NAME2 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:latest
+            docker-compose down
+            docker-compose up -d

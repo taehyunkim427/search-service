@@ -1,31 +1,22 @@
 version: '3.8'
 
 services:
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - nginx_certs:/etc/nginx/certs
-      - nginx_vhost:/etc/nginx/vhost.d
-      - nginx_html:/usr/share/nginx/html
-      - nginx_conf:/etc/nginx/conf.d
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+  search_service_front_1:
+    image: ${{ env.DOCKER_IMAGE }}:latest
+    container_name: ${{ env.CONTANIER_NAME1 }}
+    environment:
+      - VIRTUAL_HOST=${{ env.DOMAIN_NAME }}
+      - LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }}
+      - LETSENCRYPT_EMAIL=thkim427@naver.com
+      - CONTANIER_NAME=${{ env.CONTANIER_NAME1 }}
     restart: always
 
-  letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: letsencrypt-nginx
-    volumes_from:
-      - nginx-proxy
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+  search_service_front_2:
+    image: ${{ env.DOCKER_IMAGE }}:latest
+    container_name: ${{ env.CONTANIER_NAME2 }}
+    environment:
+      - VIRTUAL_HOST=${{ env.DOMAIN_NAME }}
+      - LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }}
+      - LETSENCRYPT_EMAIL=thkim427@naver.com
+      - CONTANIER_NAME=${{ env.CONTANIER_NAME2 }}
     restart: always
-
-volumes:
-  nginx_certs:
-  nginx_vhost:
-  nginx_html:
-  nginx_conf:
