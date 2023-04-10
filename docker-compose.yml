@@ -1,30 +1,28 @@
 version: '3.8'
 
 services:
-  search_service_front_1:
+  search_service_front_1: &search_service_template
     image: ${DOCKER_IMAGE}:latest
     container_name: ${CONTANIER_NAME1}
     environment:
-      - VIRTUAL_HOST=${DOMAIN_NAME}ㅠ
+      - VIRTUAL_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_EMAIL=thkim427@naver.com
       - CONTANIER_NAME=${CONTANIER_NAME1}
     networks:
-      - bridge
+      - default
     restart: always
 
   search_service_front_2:
-    image: ${DOCKER_IMAGE}:latest
+    <<: *search_service_template
     container_name: ${CONTANIER_NAME2}
     environment:
       - VIRTUAL_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_EMAIL=thkim427@naver.com
       - CONTANIER_NAME=${CONTANIER_NAME2}
-    networks:
-      - bridge
-    restart: always
 
 networks:
-  bridge:
-    external: true
+  default:
+    external:
+      name: bridge
