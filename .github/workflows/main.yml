@@ -61,6 +61,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      # Download docker-compose.yml
+      - name: Download docker-compose.yml
+        run: |
+          curl -L -o docker-compose.yml https://raw.githubusercontent.com/taehyunkim427/search-service-front/main/docker-compose.yml
       # front 컨테이너 실행
       - name: Docker run
         run: |
