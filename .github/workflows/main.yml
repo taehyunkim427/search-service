@@ -65,8 +65,14 @@ jobs:
       - name: Download docker-compose.yml
         run: |
           curl -L -o docker-compose.yml https://raw.githubusercontent.com/taehyunkim427/search-service-front/main/docker-compose.yml
+      - name: Create env file
+        run: |
+          echo DOCKER_IMAGE=${{ env.DOCKER_IMAGE }} >> env.list
+          echo CONTANIER_NAME1=${{ env.CONTANIER_NAME1 }} >> env.list
+          echo CONTANIER_NAME2=${{ env.CONTANIER_NAME2 }} >> env.list
+          echo DOMAIN_NAME=${{ env.DOMAIN_NAME }} >> env.list
       # front 컨테이너 실행
       - name: Docker run
         run: |
-            docker-compose down
-            docker-compose up -d
+          docker-compose --env-file env.list down
+          docker-compose --env-file env.list up -d

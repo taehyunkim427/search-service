@@ -2,21 +2,21 @@ version: '3.8'
 
 services:
   search_service_front_1:
-    image: ${{ env.DOCKER_IMAGE }}:latest
-    container_name: ${{ env.CONTANIER_NAME1 }}
+    image: ${DOCKER_IMAGE}:latest
+    container_name: ${CONTANIER_NAME1}
     environment:
-      - VIRTUAL_HOST=${{ env.DOMAIN_NAME }}
-      - LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }}
+      - VIRTUAL_HOST=${DOMAIN_NAME}
+      - LETSENCRYPT_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_EMAIL=thkim427@naver.com
-      - CONTANIER_NAME=${{ env.CONTANIER_NAME1 }}
+      - CONTANIER_NAME=${CONTANIER_NAME1}
     restart: always
 
   search_service_front_2:
-    image: ${{ env.DOCKER_IMAGE }}:latest
-    container_name: ${{ env.CONTANIER_NAME2 }}
+    image: ${DOCKER_IMAGE}:latest
+    container_name: ${CONTANIER_NAME2}
     environment:
-      - VIRTUAL_HOST=${{ env.DOMAIN_NAME }}
-      - LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }}
+      - VIRTUAL_HOST=${DOMAIN_NAME}
+      - LETSENCRYPT_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_EMAIL=thkim427@naver.com
-      - CONTANIER_NAME=${{ env.CONTANIER_NAME2 }}
+      - CONTANIER_NAME=${CONTANIER_NAME2}
     restart: always
