@@ -86,5 +86,5 @@ jobs:
       - name: Connect network
         run: |
           docker network create ${{ env.CUSTOM_NETWORK }} || true
-          docker network connect search ${{ env.CONTANIER_NAME1 }} || true
-          docker network connect search ${{ env.CONTANIER_NAME2 }} || true
+          docker network connect ${{ env.CUSTOM_NETWORK }} ${{ env.CONTANIER_NAME1 }} || true
+          docker network connect ${{ env.CUSTOM_NETWORK }} ${{ env.CONTANIER_NAME2 }} || true
