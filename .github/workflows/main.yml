@@ -66,6 +66,8 @@ jobs:
         run: |
           docker stop nginx-proxy || true
           docker rm nginx-proxy || true
+          docker stop nginx-proxy-letsencrypt || true
+          docker rm nginx-proxy-letsencrypt || true
       # nginx-proxy 컨테이너 실행
       - name: Run nginx-proxy container
         run: |
@@ -75,6 +77,16 @@ jobs:
             -v /var/run/docker.sock:/tmp/docker.sock:ro \
             --name nginx-proxy --restart always \
             jwilder/nginx-proxy
+      # nginx-proxy-letsencrypt 컨테이너를 실행합니다.
+      - name: Run nginx-proxy-letsencrypt container
+        run: |
+          docker pull jrcs/letsencrypt-nginx-proxy-companion
+          docker run -d --name nginx-proxy-letsencrypt --restart always \
+            -v /home/ec2-user:/etc/nginx/vhost.d:ro \
+            -v /var/run/docker.sock:/var/run/docker.sock:ro \
+            --volumes-from nginx-proxy \
+            --name nginx-proxy-letsencrypt --restart always \
+            jrcs/letsencrypt-nginx-proxy-companion
       # front 컨테이너 실행
       - name: Docker run
         run: |
@@ -82,6 +94,8 @@ jobs:
             && docker rm -fv ${{ env.CONTANIER_NAME1 }}
           docker run -d \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME1 }} \
             --name ${{ env.CONTANIER_NAME1 }} \
             --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
@@ -90,5 +104,7 @@ jobs:
           docker run -d \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
+            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             --name ${{ env.CONTANIER_NAME2 }} \
             --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
