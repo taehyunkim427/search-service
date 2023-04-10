@@ -61,18 +61,24 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # Download docker-compose.yml
-      - name: Download docker-compose.yml
-        run: |
-          curl -L -o docker-compose.yml https://raw.githubusercontent.com/taehyunkim427/search-service-front/main/docker-compose.yml
-      - name: Create env file
-        run: |
-          echo DOCKER_IMAGE=${{ env.DOCKER_IMAGE }} >> env.list
-          echo CONTANIER_NAME1=${{ env.CONTANIER_NAME1 }} >> env.list
-          echo CONTANIER_NAME2=${{ env.CONTANIER_NAME2 }} >> env.list
-          echo DOMAIN_NAME=${{ env.DOMAIN_NAME }} >> env.list
       # front 컨테이너 실행
       - name: Docker run
         run: |
-          docker-compose --env-file env.list down
-          docker-compose --env-file env.list up -d
+          docker ps -q --filter "name=${{ env.CONTANIER_NAME1 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME1 }} \
+            && docker rm -fv ${{ env.CONTANIER_NAME1 }}
+          docker run -d \
+            -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
+            -e CONTANIER_NAME=${{ env.CONTANIER_NAME1 }} \
+            --name ${{ env.CONTANIER_NAME1 }} \
+            --restart always ${{ env.DOCKER_IMAGE }}:latest
+          docker ps -q --filter "name=${{ env.CONTANIER_NAME2 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME2 }} \
+            && docker rm -fv ${{ env.CONTANIER_NAME2 }}
+          docker run -d \
+            -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
+            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
+            -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
+            --name ${{ env.CONTANIER_NAME2 }} \
+            --restart always ${{ env.DOCKER_IMAGE }}:latest
