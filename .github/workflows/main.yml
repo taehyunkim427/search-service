@@ -67,7 +67,6 @@ jobs:
           docker ps -q --filter "name=${{ env.CONTANIER_NAME1 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME1 }} \
             && docker rm -fv ${{ env.CONTANIER_NAME1 }}
           docker run -d \
-            --network ${{ env.CUSTOM_NETWORK }} \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
             -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
             -e LETSENCRYPT_EMAIL=thkim427@naver.com \
@@ -77,10 +76,15 @@ jobs:
           docker ps -q --filter "name=${{ env.CONTANIER_NAME2 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME2 }} \
             && docker rm -fv ${{ env.CONTANIER_NAME2 }}
           docker run -d \
-            --network ${{ env.CUSTOM_NETWORK }} \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
             -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
             -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
             --name ${{ env.CONTANIER_NAME2 }} \
             --restart always ${{ env.DOCKER_IMAGE }}:latest
+      # Connect custom network
+      - name: Connect network
+        run: |
+          docker network create ${{ env.CUSTOM_NETWORK }} || true
+          docker network connect search ${{ env.CONTANIER_NAME1 }} || true
+          docker network connect search ${{ env.CONTANIER_NAME2 }} || true
