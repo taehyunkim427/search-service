@@ -61,7 +61,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # Check if nginx-proxy and letsencrypt-nginx-proxy-companion containers are running and run docker-compose up if not
+      # nginx-proxy and letsencrypt-nginx-proxy-companion 체크 후 실행
+      - name: Check and restart docker-compose
         run: |
           if ! docker ps | grep -q 'nginx-proxy' || ! docker ps | grep -q 'letsencrypt-nginx'; then
             docker-compose down
