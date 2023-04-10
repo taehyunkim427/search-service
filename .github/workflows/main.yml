@@ -11,7 +11,7 @@ env:
   VERSION: ${{ github.sha }}
   CONTANIER_NAME1: search_service_front1
   CONTANIER_NAME2: search_service_front2
-  DOMAIN_NAME: 13.125.161.166
+  DOMAIN_NAME: searchservice.shop
   NAME: search_service_front_cicd
 
 jobs:
