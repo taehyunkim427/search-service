@@ -48,7 +48,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
+          tags: ${{ env.DOCKER_IMAGE }}:latest
   # 배포 Job
   deploy:
     needs: build  # build 후에 실행되도록 정의
@@ -72,7 +72,7 @@ jobs:
             -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME1 }} \
             --name ${{ env.CONTANIER_NAME1 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
+            --restart always ${{ env.DOCKER_IMAGE }}:latest
           docker ps -q --filter "name=${{ env.CONTANIER_NAME2 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME2 }} \
             && docker rm -fv ${{ env.CONTANIER_NAME2 }}
           docker run -d \
@@ -81,4 +81,4 @@ jobs:
             -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
             --name ${{ env.CONTANIER_NAME2 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
+            --restart always ${{ env.DOCKER_IMAGE }}:latest

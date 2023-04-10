@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   nginx-proxy:
@@ -8,29 +8,24 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ../nginx/certs:/etc/nginx/certs        
-      - ../nginx/log:/var/log/nginx 
-      - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
-      - conf:/etc/nginx/conf.d
+      - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+      - nginx_conf:/etc/nginx/conf.d
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /etc/nginx/certs
+    restart: always
 
-  letsencrypt:
+  letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx-proxy-letsencrypt
-    depends_on:
+    container_name: letsencrypt-nginx-proxy-companion
+    volumes_from:
       - nginx-proxy
     volumes:
-      - /etc/nginx/certs
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
 
-networks:
-  default:
-    external:
-      name: nginx-proxy
+volumes:
+  nginx_certs:
+  nginx_vhost:
+  nginx_html:
+  nginx_conf:
