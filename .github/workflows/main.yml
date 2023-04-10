@@ -67,7 +67,6 @@ jobs:
           docker ps -q --filter "name=${{ env.CONTANIER_NAME1 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME1 }} \
             && docker rm -fv ${{ env.CONTANIER_NAME1 }}
           docker run -d \
-            --network bridge \
             --network ${{ env.CUSTOM_NETWORK }} \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
             -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
@@ -78,7 +77,6 @@ jobs:
           docker ps -q --filter "name=${{ env.CONTANIER_NAME2 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME2 }} \
             && docker rm -fv ${{ env.CONTANIER_NAME2 }}
           docker run -d \
-            --network bridge \
             --network ${{ env.CUSTOM_NETWORK }} \
             -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
             -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
