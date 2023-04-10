@@ -48,7 +48,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.DOCKER_IMAGE }}:latest
+          tags: ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
   # 배포 Job
   deploy:
     needs: build  # build 후에 실행되도록 정의
@@ -61,15 +61,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # 필요할 경우 기존 nginx-proxy 및 letsencrypt 컨테이너 중지 및 제거
-      - name: Stop and remove existing nginx-proxy and letsencrypt containers
-        run: |
-          docker compose down
-      # nginx-proxy 및 letsencrypt 컨테이너 실행
-      - name: Run nginx-proxy and letsencrypt containers
-        run: |
-          docker network inspect nginx-proxy >/dev/null 2>&1 || docker network create nginx-proxy
-          docker compose up -d
       # front 컨테이너 실행
       - name: Docker run
         run: |
@@ -81,7 +72,7 @@ jobs:
             -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME1 }} \
             --name ${{ env.CONTANIER_NAME1 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:latest
+            --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
           docker ps -q --filter "name=${{ env.CONTANIER_NAME2 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME2 }} \
             && docker rm -fv ${{ env.CONTANIER_NAME2 }}
           docker run -d \
@@ -90,4 +81,4 @@ jobs:
             -e LETSENCRYPT_EMAIL=thkim427@naver.com \
             -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
             --name ${{ env.CONTANIER_NAME2 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:latest
+            --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
