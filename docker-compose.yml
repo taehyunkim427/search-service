@@ -9,8 +9,6 @@ services:
       - LETSENCRYPT_HOST=${DOMAIN_NAME}
       - LETSENCRYPT_EMAIL=thkim427@naver.com
       - CONTANIER_NAME=${CONTANIER_NAME1}
-    networks:
-      - default
     restart: always
 
   search_service_front_2:
