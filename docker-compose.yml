@@ -10,7 +10,7 @@ services:
       - LETSENCRYPT_EMAIL=thkim427@naver.com
       - CONTANIER_NAME=${CONTANIER_NAME1}
     networks:
-      - nginx-proxy
+      - bridge
     restart: always
 
   search_service_front_2:
@@ -22,7 +22,7 @@ services:
       - LETSENCRYPT_EMAIL=thkim427@naver.com
       - CONTANIER_NAME=${CONTANIER_NAME2}
     networks:
-      - nginx-proxy
+      - bridge
     restart: always
 
 networks:
