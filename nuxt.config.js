@@ -47,7 +47,7 @@ export default {
     baseURL: 
       process.env.NODE_ENV === 'production'
       ? 'https://searchservice.shop:8080' // Spring Api 운영
-      : 'http://localhost:8443', // Spring Api 로컬
+      : 'http://localhost:8080', // Spring Api 로컬
     headers: {
       common: {
         'Accept': '*/*',
