@@ -46,8 +46,8 @@ export default {
   axios: {
     baseURL: 
       process.env.NODE_ENV === 'production'
-      ? 'http://search_service_api:8080' // Spring Api 운영
-      : 'http://localhost:8080', // Spring Api 로컬
+      ? 'https://searchservice.shop:8080' // Spring Api 운영
+      : 'http://localhost:8443', // Spring Api 로컬
     headers: {
       common: {
         'Accept': '*/*',
