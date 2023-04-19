@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-service-front
+spec:
+  selector:
+    matchLabels:
+      app: search-service-front
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: search-service-front
+    spec:
+      containers:
+      - name: search-service-front
+        image: ghcr.io/taehyunkim427/search_service_front:latest
+        ports:
+        - containerPort: 3000
+  progressDeadlineSeconds: 600 
+  strategy:
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: 0
+    type: RollingUpdate
