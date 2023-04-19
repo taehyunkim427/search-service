@@ -63,23 +63,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       # front 컨테이너 실행
-      - name: Docker run
+      - name: Update Deployment
         run: |
-          docker ps -q --filter "name=${{ env.CONTANIER_NAME1 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME1 }} \
-            && docker rm -fv ${{ env.CONTANIER_NAME1 }}
-          docker run -d \
-            -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
-            -e CONTANIER_NAME=${{ env.CONTANIER_NAME1 }} \
-            --name ${{ env.CONTANIER_NAME1 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
-          docker ps -q --filter "name=${{ env.CONTANIER_NAME2 }}" | grep -q . && docker stop ${{ env.CONTANIER_NAME2 }} \
-            && docker rm -fv ${{ env.CONTANIER_NAME2 }}
-          docker run -d \
-            -e VIRTUAL_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_HOST=${{ env.DOMAIN_NAME }} \
-            -e LETSENCRYPT_EMAIL=thkim427@naver.com \
-            -e CONTANIER_NAME=${{ env.CONTANIER_NAME2 }} \
-            --name ${{ env.CONTANIER_NAME2 }} \
-            --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
+          kubectl set image deployment/search-service-api search-service-api=${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
+          kubectl rollout status deployment/search-service-api
