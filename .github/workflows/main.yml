@@ -65,5 +65,5 @@ jobs:
       # front 컨테이너 실행
       - name: Update Deployment
         run: |
-          kubectl set image deployment/search-service-api search-service-api=${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
-          kubectl rollout status deployment/search-service-api
+          kubectl set image deployment/search-service-front search-service-front=${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
+          kubectl rollout status deployment/search-service-front
