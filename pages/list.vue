@@ -27,7 +27,7 @@ export default {
                 sort: this.$store.state.searchSort,
                 page: this.$store.state.searchPage
             }
-            const res = await this.$axios.post('/api/blog/list', searchParams);
+            const res = await this.$axios.post('/blog/list', searchParams);
             this.$store.commit(SET_BLOG_META, res.data.meta);
             this.$store.commit(SET_BLOGS, res.data.documents);
         },

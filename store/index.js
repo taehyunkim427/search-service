@@ -50,7 +50,7 @@ export const state = () => ({
   export const actions = {
     async [FETCH_BLOG_LISTS]({ state, commit, dispatch }) {
       const searchParams = { query: state.searchQuery, size : state.searchSize, sort: state.searchSort, page: state.searchPage }
-      const { data } = await this.$axios.post('/api/blog/list', searchParams);
+      const { data } = await this.$axios.post('/blog/list', searchParams);
       commit('SET_BLOG_META', data.meta);
       commit('SET_BLOGS', data.documents);
 
@@ -58,7 +58,7 @@ export const state = () => ({
       await dispatch(FETCH_HYPE_QUERY);
     },
     async [FETCH_HYPE_QUERY]({ commit }) {
-      const { data } = await this.$axios.get('/api/blog/cache/hype');
+      const { data } = await this.$axios.get('/blog/cache/hype');
       commit('SET_HYPE_QUERY', data.popularSearch);
     },
   }
