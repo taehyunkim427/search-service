@@ -7,12 +7,8 @@ on:
 
 # 환경설정
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/search_service_front
+  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/search-service-front
   VERSION: ${{ github.sha }}
-  CONTANIER_NAME1: search_service_front1
-  CONTANIER_NAME2: search_service_front2
-  DOMAIN_NAME: searchservice.shop
-  CUSTOM_NETWORK: search
 
 jobs:
   # 빌드 Job
