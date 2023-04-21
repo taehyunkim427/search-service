@@ -20,5 +20,8 @@ RUN npm run build
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
+# 환경 변수 설정
+ENV NODE_ENV=production
+
 # 애플리케이션 실행
 CMD ["npm", "start"]
